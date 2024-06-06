@@ -16,4 +16,3 @@ extern void WaitTFlagCnt(unsigned int cnt);
 
 extern float PWMOut(float dutyratio);
 extern float GetAngle();
-extern float GetRefAngle(float sref, float vmax, float acc);

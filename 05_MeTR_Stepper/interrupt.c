@@ -78,7 +78,7 @@ interrupt void ISRtimer0()
 		// The codes hearafter are executed at every 100 timer interrupts.
 		cnt1K = 0;
 
-		UMAddData(USBposition, USBvelocity, USBacc ,USBdelayCnt);	// Add 4 data set to USBMon
+		UMAddData(USB_pos, USB_vel, USB_acc ,USB_delayCnt);	// Add 4 data set to USBMon
 	}
 }
 

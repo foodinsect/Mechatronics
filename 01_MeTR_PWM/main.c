@@ -171,6 +171,7 @@ void main()
 	WaitTFlagCnt(100);
 
 	PWMOut(25);
-
+	
+	while (1) {} // block to terminate
 }
 

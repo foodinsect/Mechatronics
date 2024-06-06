@@ -7,10 +7,10 @@ extern char tmp_string[SIZE_OF_RESPACKET];
 
 // Interrupt.c
 extern unsigned int TFlag;
-extern float USBposition;
-extern float USBvelocity;
-extern float USBvelPrev;
-extern float USBcelCurr;
-extern float USBacc;
-extern unsigned int USBdelayCnt;
+extern float USB_pos;
+extern float USB_vel;
+extern float USB_prevVel;
+extern float USB_CurrVel;
+extern float USB_acc;
+extern unsigned int USB_delayCnt;
 

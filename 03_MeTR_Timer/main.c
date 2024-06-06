@@ -103,39 +103,71 @@ void WaitTFlagCnt(unsigned int cnt)
 	}
 }
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+/// @brief 	Generates a PWM signal based on the User Input 
+/// @param 	dutyratio Duty ratio ranging from -50.0 to 50.0
+/// @return The final adjusted dutyratio value
+
 float PWMOut(float dutyratio)
 {
-	float duty; 		// return할 hex 단위의 dutyratio
+    /*
+        Goal
+        1. Generates a 0~100% PWM waveform corresponding to -50.0 <= dutyratio <= 50.0.
+        2. The PWM duty of the output waveform must be saturated to 0% or 100%.
+        
+            User Input   |  Conversion to PWM Value (hex) |    	Direction     	|  Speed
+			ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+            0 %          |              0x000             |   Reverse rotation  |  -100%
+            25 %         |              0x400             |   Reverse rotation  |  -50%
+            50 %         |              0x800             |       Stop         	|   0%
+            75 %         |              0x000             |   Forward rotation  |  50%
+            100 %        |              0x400             |   Forward rotation  |  100%
+    */
+
+
+	float duty; 				// PWM duty variable
 	
-	if (dutyratio < -50.0) {
-		dutyratio = -50.0;	 // Saturation
+	// Saturation (Safety margin 0.5)
+	if (dutyratio < -49.5) {
+		dutyratio = -49.5;
+	}
+	if (dutyratio > 49.5) {	
+		dutyratio = 49.5;
 	}
 
-	if (dutyratio> 50.0) {	
-		dutyratio = 50.0;
-	}
+	// Conversion of dutyratio to PWM value
 	duty = (dutyratio + 50) * 0xfff/100.0;
 
-	*PWMRIGHT = duty;
+	*PWMRIGHT = duty;			// Set value to the PWM register
 
-	return dutyratio;  
+	return dutyratio;  			// Return the final adjusted dutyratio
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @brief Reads the encoder position and calculates the rotation angle in degrees.
+/// @return The rotation angle in degrees.
+
+#define MOTOR_TURNS_PER_WHEEL 7.5
+#define PULSES_PER_MOTOR_TURN 512.0
+
 float GetAngle(){
-	int encbit;
-	signed int signed_encbit;
-	float rotationDeg;
+    int encbit;  // Variable to store the encoder position bits
+    signed int signed_encbit;  // Variable to store the signed encoder position
+    float rotationDeg;  // Variable to store the calculated rotation angle
 
-	// masking: left only the last 16bits
-	encbit = *ENCPOSR & 0xFFFF;
+    // Masking: keep only the last 16 bits
+    encbit = *ENCPOSR & 0xFFFF;
 
-	// converse into signed number
-	if (encbit <= 0x7FFF) signed_encbit = encbit;
-	else signed_encbit = encbit - 65536;
+    // Convert into signed decimal number
+    signed_encbit = (encbit <= 0x7FFF) ? encbit : encbit - 65536;
 
-	// calc rotattion degree depends on the resolution
-	rotationDeg = signed_encbit * (360.0 / 3840.0); // 바퀴 1회전당 3840 pulse
-	return rotationDeg;
+    // Calculate rotation degree depending on the resolution
+    // 1 wheel rotation = 3840 pulses
+    rotationDeg = signed_encbit * (360.0 / (MOTOR_TURNS_PER_WHEEL * PULSES_PER_MOTOR_TURN));
+    return rotationDeg;
 }
 
 unsigned int TINTCnt;
@@ -161,9 +193,9 @@ void main()
 
 	GIE();
 
-	*FPGALED = 1;			// FPGA LED 1 : ON, 0 : OFF
-	*ENCPOSCLR = 1;			// 위치 초기화
-	*PWMDRVEN = 1;			// PWMENABLE 1 : ON, 0 : 0FF
+	*FPGALED = 1;				// FPGA LED 1 : ON, 0 : OFF
+	*ENCPOSCLR = 1;				// Clear Encoder Counter
+	*PWMDRVEN = 1;				// PWMENABLE 1 : ON, 0 : 0FF
 	//*PWMRIGHT = 0x800;		// PWM : 0x000 ~ 0x800 ~ 0xFFF
 
 	TINTCnt = 0;	
