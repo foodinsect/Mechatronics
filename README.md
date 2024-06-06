@@ -27,5 +27,5 @@ This repository contains the coursework and projects completed for the Mechatron
 - **Description:** Design and implementation of a control system for an inverted pendulum.
 - **Key Concepts:** PID Balancing control and Swing Up.
 - **Files:** `07_MeTR_Inverted_Pendulum/`
-- **Swing Up by Bang-Bang Control and PID Balancing control:** https://studio.youtube.com/video/M16-Izn_8K4/edit
-- **Energy Based Swing Up and PID Balancing control:** https://studio.youtube.com/video/M16-Izn_8K4/edit
+- [Swing Up by Bang-Bang Control and PID Balancing control](https://studio.youtube.com/video/M16-Izn_8K4/edit)
+- [Energy Based Swing Up and PID Balancing control](https://studio.youtube.com/video/M16-Izn_8K4/edit)
