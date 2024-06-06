@@ -21,9 +21,9 @@ This repository contains the coursework and projects completed for the Mechatron
 ### 3. BLDC Motor Control
 - **Description:** Controlling a Brushless DC (BLDC) motor using sensor feedback.
 - **Key Concepts:** Commutation, Hall effect sensors, sensorless control, FOC (Field-Oriented Control).
-- **Files:** `bldc_motor/`
+- **Files:** `06_MeTR_BLDC/`
 
 ### 4. Inverted Pendulum Control
 - **Description:** Design and implementation of a control system for an inverted pendulum.
 - **Key Concepts:** PID Balancing control and Swing Up.
-- **Files:** `inverted_pendulum/`
+- **Files:** `07_MeTR_Inverted_Pendulum/`
