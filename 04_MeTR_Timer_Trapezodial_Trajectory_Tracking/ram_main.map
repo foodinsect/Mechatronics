@@ -1,0 +1,414 @@
+******************************************************************************
+          TMS320C6x COFF Linker PC Version 4.10                
+******************************************************************************
+>> Linked Thu Jun 06 11:59:27 2024
+
+OUTPUT FILE NAME:   <ram_main.out>
+ENTRY POINT SYMBOL: "_c_int00"  address: 000079a0
+
+
+MEMORY CONFIGURATION
+
+                  name            origin    length      used    attr    fill
+         ----------------------  --------  ---------  --------  ----  --------
+         VECT                    00000000   00000200  00000200  RWIX
+         IPRAM                   00000200   0000fe00  00007a60  RWIX
+         EXRAM                   00400000   00040000  0000800c  RWIX
+         CE1VECS                 01400000   00000200  00000000  RWIX
+         CE1MEM                  01400200   0000fe00  00000000  RWIX
+         IOCE2                   02000000   00010000  00000000  RWIX
+         IDRAM                   80000000   00010000  00002768  RWIX
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.vector    0    00000000    00000200     
+                  00000000    00000200     initvec.obj (.vector)
+
+.text      0    00000200    00007a60     
+                  00000200    000029a0     rts6701.lib : _printfi.obj (.text)
+                  00002ba0    00000000                 : ctype.obj (.text)
+                  00002ba0    00000000                 : errno.obj (.text)
+                  00002ba0    00000000                 : sysmem.obj (.text)
+                  00002ba0    00000000     initvec.obj (.text)
+                  00002ba0    00000fc0     rts6701.lib : memory.obj (.text)
+                  00003b60    00000d40     main.obj (.text)
+                  000048a0    000005c0     interrupt.obj (.text)
+                  00004e60    00000480     serial.obj (.text)
+                  000052e0    00000460     rts6701.lib : imath40.obj (.text)
+                  00005740    00000420                 : ecvt.obj (.text)
+                  00005b60    000003e0                 : fcvt.obj (.text)
+                  00005f40    000002e0                 : frcdivd.obj (.text)
+                  00006220    000002a0                 : memcpy.obj (.text)
+                  000064c0    00000280                 : sqrt.obj (.text)
+                  00006740    00000240                 : exit.obj (.text)
+                  00006980    00000220                 : divd.obj (.text)
+                  00006ba0    000001c0                 : sprintf.obj (.text)
+                  00006d60    000001c0     USBMon.obj (.text)
+                  00006f20    000001a0     rts6701.lib : divf.obj (.text)
+                  000070c0    00000180                 : ldexp.obj (.text)
+                  00007240    00000140                 : atoi.obj (.text)
+                  00007380    00000140                 : frexp.obj (.text)
+                  000074c0    00000140                 : ltoa.obj (.text)
+                  00007600    00000120                 : frcdivf.obj (.text)
+                  00007720    00000100                 : autoinit.obj (.text)
+                  00007820    000000c0                 : fixdli.obj (.text)
+                  000078e0    000000c0                 : divu.obj (.text)
+                  000079a0    000000a0                 : boot.obj (.text)
+                  00007a40    000000a0                 : remi.obj (.text)
+                  00007ae0    00000080                 : strcpy.obj (.text)
+                  00007b60    00000060                 : memccpy.obj (.text)
+                  00007bc0    00000060                 : strlen.obj (.text)
+                  00007c20    00000040                 : _lock.obj (.text)
+
+.cinit     0    80000000    00000124     
+                  80000000    0000005c     main.obj (.cinit)
+                  8000005c    00000004     --HOLE-- [fill = 00000000]
+                  80000060    0000002c     rts6701.lib : exit.obj (.cinit)
+                  8000008c    00000004     --HOLE-- [fill = 00000000]
+                  80000090    0000002c     interrupt.obj (.cinit)
+                  800000bc    00000004     --HOLE-- [fill = 00000000]
+                  800000c0    0000001c     rts6701.lib : sysmem.obj (.cinit)
+                  800000dc    00000004     --HOLE-- [fill = 00000000]
+                  800000e0    0000001c                 : _lock.obj (.cinit)
+                  800000fc    00000004     --HOLE-- [fill = 00000000]
+                  80000100    0000000c                 : memory.obj (.cinit)
+                  8000010c    00000004     --HOLE-- [fill = 00000000]
+                  80000110    0000000c                 : errno.obj (.cinit)
+                  8000011c    00000008     --HOLE-- [fill = 00000000]
+
+.const     0    80000124    000001a8     
+                  80000124    00000101     rts6701.lib : ctype.obj (.const)
+                  80000225    0000007d     main.obj (.const)
+                  800002a2    0000002a     rts6701.lib : _printfi.obj (.const)
+
+.switch    0    80000000    00000000     UNINITIALIZED
+
+.bss       0    80000000    00000000     UNINITIALIZED
+                  80000000    00000000     initvec.obj (.bss)
+                  80000000    00000000     rts6701.lib : sysmem.obj (.bss)
+                  80000000    00000000                 : memory.obj (.bss)
+                  80000000    00000000                 : memcpy.obj (.bss)
+                  80000000    00000000                 : memccpy.obj (.bss)
+                  80000000    00000000                 : ltoa.obj (.bss)
+                  80000000    00000000                 : ldexp.obj (.bss)
+                  80000000    00000000                 : imath40.obj (.bss)
+                  80000000    00000000                 : frexp.obj (.bss)
+                  80000000    00000000                 : fixdli.obj (.bss)
+                  80000000    00000000                 : fcvt.obj (.bss)
+                  80000000    00000000                 : errno.obj (.bss)
+                  80000000    00000000                 : ecvt.obj (.bss)
+                  80000000    00000000                 : divu.obj (.bss)
+                  80000000    00000000                 : autoinit.obj (.bss)
+                  80000000    00000000                 : _printfi.obj (.bss)
+                  80000000    00000000                 : _lock.obj (.bss)
+                  80000000    00000000                 : strlen.obj (.bss)
+                  80000000    00000000                 : strcpy.obj (.bss)
+                  80000000    00000000                 : sqrt.obj (.bss)
+                  80000000    00000000                 : sprintf.obj (.bss)
+                  80000000    00000000                 : remi.obj (.bss)
+                  80000000    00000000                 : frcdivf.obj (.bss)
+                  80000000    00000000                 : frcdivd.obj (.bss)
+                  80000000    00000000                 : exit.obj (.bss)
+                  80000000    00000000                 : divf.obj (.bss)
+                  80000000    00000000                 : divd.obj (.bss)
+                  80000000    00000000                 : ctype.obj (.bss)
+                  80000000    00000000                 : boot.obj (.bss)
+                  80000000    00000000                 : atoi.obj (.bss)
+                  80000000    00000000     USBMon.obj (.bss)
+                  80000000    00000000     serial.obj (.bss)
+                  80000000    00000000     interrupt.obj (.bss)
+                  80000000    00000000     main.obj (.bss)
+
+.cio       0    80000000    00000000     UNINITIALIZED
+
+.data      0    80000000    00000000     UNINITIALIZED
+                  80000000    00000000     initvec.obj (.data)
+                  80000000    00000000     rts6701.lib : sysmem.obj (.data)
+                  80000000    00000000                 : memory.obj (.data)
+                  80000000    00000000                 : memcpy.obj (.data)
+                  80000000    00000000                 : memccpy.obj (.data)
+                  80000000    00000000                 : ltoa.obj (.data)
+                  80000000    00000000                 : ldexp.obj (.data)
+                  80000000    00000000                 : imath40.obj (.data)
+                  80000000    00000000                 : frexp.obj (.data)
+                  80000000    00000000                 : fixdli.obj (.data)
+                  80000000    00000000                 : fcvt.obj (.data)
+                  80000000    00000000                 : errno.obj (.data)
+                  80000000    00000000                 : ecvt.obj (.data)
+                  80000000    00000000                 : divu.obj (.data)
+                  80000000    00000000                 : autoinit.obj (.data)
+                  80000000    00000000                 : _printfi.obj (.data)
+                  80000000    00000000                 : _lock.obj (.data)
+                  80000000    00000000                 : strlen.obj (.data)
+                  80000000    00000000                 : strcpy.obj (.data)
+                  80000000    00000000                 : sqrt.obj (.data)
+                  80000000    00000000                 : sprintf.obj (.data)
+                  80000000    00000000                 : remi.obj (.data)
+                  80000000    00000000                 : frcdivf.obj (.data)
+                  80000000    00000000                 : frcdivd.obj (.data)
+                  80000000    00000000                 : exit.obj (.data)
+                  80000000    00000000                 : divf.obj (.data)
+                  80000000    00000000                 : divd.obj (.data)
+                  80000000    00000000                 : ctype.obj (.data)
+                  80000000    00000000                 : boot.obj (.data)
+                  80000000    00000000                 : atoi.obj (.data)
+                  80000000    00000000     USBMon.obj (.data)
+                  80000000    00000000     serial.obj (.data)
+                  80000000    00000000     interrupt.obj (.data)
+                  80000000    00000000     main.obj (.data)
+
+.far       0    800002cc    0000049c     UNINITIALIZED
+                  800002cc    00000288     serial.obj (.far)
+                  80000554    0000008c     rts6701.lib : exit.obj (.far)
+                  800005e0    00000080                 : _printfi.obj (.far)
+                  80000660    00000064                 : fcvt.obj (.far)
+                  800006c4    00000064                 : ecvt.obj (.far)
+                  80000728    0000001c     main.obj (.far)
+                  80000744    0000000c     interrupt.obj (.far)
+                  80000750    00000008     rts6701.lib : memory.obj (.far)
+                  80000758    00000008                 : _lock.obj (.far)
+                  80000760    00000004                 : sprintf.obj (.far)
+                  80000764    00000004                 : errno.obj (.far)
+
+.stack     0    80000768    00001000     UNINITIALIZED
+                  80000768    00000000     rts6701.lib : boot.obj (.stack)
+
+.sysmem    0    80001768    00001000     UNINITIALIZED
+                  80001768    00000000     rts6701.lib : sysmem.obj (.sysmem)
+
+.USBMON    0    00400000    0000800c     UNINITIALIZED
+                  00400000    0000800c     USBMon.obj (.USBMON)
+
+
+GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
+
+address    name
+--------   ----
+80000000   $bss
+80000000   .bss
+80000000   .data
+00000200   .text
+00006968   C$$EXIT
+00004ff0   _CheckSum
+00003bf8   _GIE
+00003e74   _GetAngle
+00003ee0   _GetRefAngleVel
+000048c0   _ISRNMI
+000048a0   _ISRextint4
+000048a8   _ISRextint5
+000048c8   _ISRextint6
+00004c20   _ISRtimer0
+00003b60   _InitEXINTF
+00003be0   _InitINT
+00003ba0   _InitTimer
+00004e60   _InitUART
+00006d60   _InitUSBMon
+00003d9c   _PWMOut
+80000730   _R
+00004f6c   _ReceiveByte
+0000517c   _Report
+00004f88   _SendByte
+000050e4   _SendData
+80000744   _TFlag
+80000728   _TINTCnt
+00006d9c   _UMAddData
+00400000   _USBMonStuff
+00003cc4   _WaitTFlag
+00003d18   _WaitTFlagCnt
+00001000   __STACK_SIZE
+00001000   __SYSMEM_SIZE
+80000000   ___bss__
+80000000   ___cinit__
+80000000   ___data__
+80000000   ___edata__
+80000000   ___end__
+00007c60   ___etext__
+ffffffff   ___pinit__
+00000200   ___text__
+00007720   __auto_init
+800005d8   __cleanup_ptr
+80000124   __ctypes_
+00006980   __divd
+00006f20   __divf
+00005678   __divli
+000078e0   __divu
+00005378   __divul
+800005dc   __dtors_ptr
+00007820   __fixdli
+00005f40   __frcdivd
+00007600   __frcdivf
+80000758   __lock
+80000750   __memory_size
+00007c20   __nop
+00000200   __printfi
+00007c28   __register_lock
+00007c3c   __register_unlock
+00007a40   __remi
+000055d8   __remli
+000052e0   __remul
+80000768   __stack
+80001768   __sys_memory
+8000075c   __unlock
+00006968   _abort
+80000738   _accel
+00006890   _atexit
+00007240   _atoi
+000079a0   _c_int00
+000048b0   _c_int08
+000048b8   _c_int09
+00002f44   _calloc
+800002cc   _compacket
+00003c64   _delay_ms
+00003c0c   _delay_us
+00005740   _ecvt
+80000764   _errno
+00006740   _exit
+00005b60   _fcvt
+000033c8   _free
+00007380   _frexp
+000070c0   _ldexp
+000074c0   _ltoa
+00004470   _main
+00002d7c   _malloc
+00003790   _memalign
+00007b60   _memccpy
+00006220   _memcpy
+00002d14   _minit
+8000073c   _pos_t
+80000748   _prevErr
+00002fec   _realloc
+800003b8   _respacket
+00006ba0   _sprintf
+000064c0   _sqrt
+00007ae0   _strcpy
+00007bc0   _strlen
+8000074c   _sumErr
+8000072c   _timerCheckCnt
+8000048c   _tmp_string
+80000734   _vel_max
+80000740   _vel_t
+80000000   cinit
+80000000   edata
+80000000   end
+00007c60   etext
+ffffffff   pinit
+
+
+GLOBAL SYMBOLS: SORTED BY Symbol Address 
+
+address    name
+--------   ----
+00000200   ___text__
+00000200   .text
+00000200   __printfi
+00001000   __STACK_SIZE
+00001000   __SYSMEM_SIZE
+00002d14   _minit
+00002d7c   _malloc
+00002f44   _calloc
+00002fec   _realloc
+000033c8   _free
+00003790   _memalign
+00003b60   _InitEXINTF
+00003ba0   _InitTimer
+00003be0   _InitINT
+00003bf8   _GIE
+00003c0c   _delay_us
+00003c64   _delay_ms
+00003cc4   _WaitTFlag
+00003d18   _WaitTFlagCnt
+00003d9c   _PWMOut
+00003e74   _GetAngle
+00003ee0   _GetRefAngleVel
+00004470   _main
+000048a0   _ISRextint4
+000048a8   _ISRextint5
+000048b0   _c_int08
+000048b8   _c_int09
+000048c0   _ISRNMI
+000048c8   _ISRextint6
+00004c20   _ISRtimer0
+00004e60   _InitUART
+00004f6c   _ReceiveByte
+00004f88   _SendByte
+00004ff0   _CheckSum
+000050e4   _SendData
+0000517c   _Report
+000052e0   __remul
+00005378   __divul
+000055d8   __remli
+00005678   __divli
+00005740   _ecvt
+00005b60   _fcvt
+00005f40   __frcdivd
+00006220   _memcpy
+000064c0   _sqrt
+00006740   _exit
+00006890   _atexit
+00006968   _abort
+00006968   C$$EXIT
+00006980   __divd
+00006ba0   _sprintf
+00006d60   _InitUSBMon
+00006d9c   _UMAddData
+00006f20   __divf
+000070c0   _ldexp
+00007240   _atoi
+00007380   _frexp
+000074c0   _ltoa
+00007600   __frcdivf
+00007720   __auto_init
+00007820   __fixdli
+000078e0   __divu
+000079a0   _c_int00
+00007a40   __remi
+00007ae0   _strcpy
+00007b60   _memccpy
+00007bc0   _strlen
+00007c20   __nop
+00007c28   __register_lock
+00007c3c   __register_unlock
+00007c60   etext
+00007c60   ___etext__
+00400000   _USBMonStuff
+80000000   ___data__
+80000000   ___edata__
+80000000   ___cinit__
+80000000   .bss
+80000000   .data
+80000000   $bss
+80000000   ___bss__
+80000000   ___end__
+80000000   end
+80000000   edata
+80000000   cinit
+80000124   __ctypes_
+800002cc   _compacket
+800003b8   _respacket
+8000048c   _tmp_string
+800005d8   __cleanup_ptr
+800005dc   __dtors_ptr
+80000728   _TINTCnt
+8000072c   _timerCheckCnt
+80000730   _R
+80000734   _vel_max
+80000738   _accel
+8000073c   _pos_t
+80000740   _vel_t
+80000744   _TFlag
+80000748   _prevErr
+8000074c   _sumErr
+80000750   __memory_size
+80000758   __lock
+8000075c   __unlock
+80000764   _errno
+80000768   __stack
+80001768   __sys_memory
+ffffffff   pinit
+ffffffff   ___pinit__
+
+[108 symbols]
