@@ -1,0 +1,205 @@
+TMS320C6x COFF Assembler         Version 4.10     Fri Jun 07 17:50:58 2024
+Copyright (c) 1996-2001 Texas Instruments Incorporated
+temp\usbmon.asm                                                      PAGE    1
+
+       1                    ;******************************************************************************
+       2                    ;* TMS320C6x ANSI C Codegen                                      Version 4.10 *
+       3                    ;* Date/Time created: Fri Jun 07 17:50:58 2024                                *
+       4                    ;******************************************************************************
+       5                    
+       6                    ;******************************************************************************
+       7                    ;* GLOBAL FILE PARAMETERS                                                     *
+       8                    ;*                                                                            *
+       9                    ;*   Architecture      : TMS320C670x                                          *
+      10                    ;*   Optimization      : Disabled                                             *
+      11                    ;*   Optimizing for    : Compile time, Ease of Development                    *
+      12                    ;*                       Based on options: no -o, no -ms                      *
+      13                    ;*   Endian            : Little                                               *
+      14                    ;*   Interrupt Thrshld : Disabled                                             *
+      15                    ;*   Memory Model      : Large                                                *
+      16                    ;*   Calls to RTS      : Far                                                  *
+      17                    ;*   Pipelining        : Disabled                                             *
+      18                    ;*   Memory Aliases    : Presume are aliases (pessimistic)                    *
+      19                    ;*   Debug Info        : No Debug Info                                        *
+      20                    ;*                                                                            *
+      21                    ;******************************************************************************
+      22                    
+      23                            .asg    A15, FP
+      24                            .asg    B14, DP
+      25                            .asg    B15, SP
+      26                            .global $bss
+      27                    
+      28                            .global _USBMonStuff
+      29 00000000           _USBMonStuff:   .usect  ".USBMON",32780,4
+      30                    ;       acp6x -q -D_FAR_RTS=1 --large_model=3 --version=6701 -m --i_output_file C:\Users\opqrs\AppData
+      31 00000000                   .sect   ".text"
+      32                            .global _InitUSBMon
+      33                    
+      34                    ;******************************************************************************
+      35                    ;* FUNCTION NAME: _InitUSBMon                                                 *
+      36                    ;*                                                                            *
+      37                    ;*   Regs Modified     : A0,A3,B4,B5                                          *
+      38                    ;*   Regs Used         : A0,A3,B3,B4,B5                                       *
+      39                    ;*   Local Frame Size  : 0 Args + 0 Auto + 0 Save = 0 byte                    *
+      40                    ;******************************************************************************
+      41 00000000           _InitUSBMon:
+      42                    ;** --------------------------------------------------------------------------*
+      43 00000000 000C0362             B       .S2     B3                ; |18| 
+      44 00000004 00000028-            MVKL    .S1     _USBMonStuff,A0   ; |15| 
+      45                    
+      46 00000008 00000069-            MVKH    .S1     _USBMonStuff,A0   ; |15| 
+      47 0000000c 0200022B- ||         MVKL    .S2     _USBMonStuff+4,B4 ; |16| 
+      48 00000010 018428C0  ||         ZERO    .D1     A3                ; |15| 
+      49                    
+      50 00000020 00000429-            MVKL    .S1     _USBMonStuff+8,A0 ; |17| 
+      51 00000024 01800275  ||         STW     .D1T1   A3,*A0            ; |15| 
+      52 00000028 0200006B- ||         MVKH    .S2     _USBMonStuff+4,B4 ; |16| 
+      53 0000002c 028428C2  ||         ZERO    .D2     B5                ; |16| 
+      54                    
+      55 00000030 029002F7             STW     .D2T2   B5,*B4            ; |16| 
+TMS320C6x COFF Assembler         Version 4.10     Fri Jun 07 17:50:58 2024
+Copyright (c) 1996-2001 Texas Instruments Incorporated
+temp\usbmon.asm                                                      PAGE    2
+
+      56 00000034 00000068- ||         MVKH    .S1     _USBMonStuff+8,A0 ; |17| 
+      57                    
+      58 00000038 01800274             STW     .D1T1   A3,*A0            ; |17| 
+      59                               ; BRANCH OCCURS                   ; |18| 
+      60                    
+      61                    
+      62 0000003c                   .sect   ".text"
+      63                            .global _UMAddData
+      64                    
+      65                    ;******************************************************************************
+      66                    ;* FUNCTION NAME: _UMAddData                                                  *
+      67                    ;*                                                                            *
+      68                    ;*   Regs Modified     : A0,A3,A4,B0,B4,B5,B6,B7,SP                           *
+      69                    ;*   Regs Used         : A0,A3,A4,A6,B0,B3,B4,B5,B6,B7,SP                     *
+      70                    ;*   Local Frame Size  : 0 Args + 24 Auto + 0 Save = 24 byte                  *
+      71                    ;******************************************************************************
+      72 0000003c           _UMAddData:
+      73                    ;** --------------------------------------------------------------------------*
+      74 0000003c 07BF09C2             SUB     .D2     SP,24,SP          ; |21| 
+      75 00000040 033C82F6             STW     .D2T2   B6,*+SP(16)       ; |21| 
+      76                    
+      77 00000044 033C62F5             STW     .D2T1   A6,*+SP(12)       ; |21| 
+      78 00000048 001011A0  ||         MV      .S1X    B4,A0             ; |21| 
+      79                    
+      80 0000004c 00000229-            MVKL    .S1     _USBMonStuff+4,A0 ; |25| 
+      81 00000050 003C42F5  ||         STW     .D2T1   A0,*+SP(8)        ; |21| 
+      82 00000054 021011A2  ||         MV      .S2X    A4,B4             ; |21| 
+      83                    
+      84 00000058 00000069-            MVKH    .S1     _USBMonStuff+4,A0 ; |25| 
+      85 0000005c 023C22F6  ||         STW     .D2T2   B4,*+SP(4)        ; |21| 
+      86                    
+      87 00000060 01800264             LDW     .D1T1   *A0,A3            ; |25| 
+      88 00000064 00000428-            MVKL    .S1     _USBMonStuff+8,A0 ; |26| 
+      89 00000068 00000068-            MVKH    .S1     _USBMonStuff+8,A0 ; |26| 
+      90 0000006c 00002000             NOP             2
+      91 00000070 01BCA2F4             STW     .D2T1   A3,*+SP(20)       ; |25| 
+      92 00000074 00000264             LDW     .D1T1   *A0,A0            ; |26| 
+      93 00000078 01BCA2E4             LDW     .D2T1   *+SP(20),A3       ; |28| 
+      94 0000007c 00004000             NOP             3
+      95 00000080 003CC2F4             STW     .D2T1   A0,*+SP(24)       ; |26| 
+      96 00000084 02BCC2E6             LDW     .D2T2   *+SP(24),B5       ; |28| 
+      97 00000088 00000628-            MVKL    .S1     _USBMonStuff+12,A0 ; |28| 
+      98 0000008c 00000068-            MVKH    .S1     _USBMonStuff+12,A0 ; |28| 
+      99 00000090 00002000             NOP             2
+     100 00000094 02159CA0             SHL     .S1X    B5,12,A4          ; |28| 
+     101 00000098 01907C40             ADDAW   .D1     A4,A3,A3          ; |28| 
+     102 0000009c 00006840             ADD     .D1     A0,A3,A0          ; |28| 
+     103 000000a0 02000276             STW     .D1T2   B4,*A0            ; |28| 
+     104 000000a4 023CC2E6             LDW     .D2T2   *+SP(24),B4       ; |29| 
+     105 000000a8 003CA2E4             LDW     .D2T1   *+SP(20),A0       ; |29| 
+     106 000000ac 02BC42E6             LDW     .D2T2   *+SP(8),B5        ; |29| 
+     107 000000b0 00002000             NOP             2
+     108                    
+     109 000000b4 0210062B-            MVKL    .S2     _USBMonStuff+8204,B4 ; |29| 
+     110 000000b8 01919CA0  ||         SHL     .S1X    B4,12,A3          ; |29| 
+TMS320C6x COFF Assembler         Version 4.10     Fri Jun 07 17:50:58 2024
+Copyright (c) 1996-2001 Texas Instruments Incorporated
+temp\usbmon.asm                                                      PAGE    3
+
+     111                    
+     112 000000c0 000C1C41             ADDAW   .D1     A3,A0,A0          ; |29| 
+     113 000000c4 0200006A- ||         MVKH    .S2     _USBMonStuff+8204,B4 ; |29| 
+     114                    
+     115 000000c8 001011E0             ADD     .S1X    B4,A0,A0          ; |29| 
+     116 000000cc 02800276             STW     .D1T2   B5,*A0            ; |29| 
+     117 000000d0 023CC2E6             LDW     .D2T2   *+SP(24),B4       ; |30| 
+     118 000000d4 023CA2E4             LDW     .D2T1   *+SP(20),A4       ; |30| 
+     119 000000d8 02BC62E6             LDW     .D2T2   *+SP(12),B5       ; |30| 
+     120 000000dc 01A00628-            MVKL    .S1     _USBMonStuff+16396,A3 ; |30| 
+     121 000000e0 01800068-            MVKH    .S1     _USBMonStuff+16396,A3 ; |30| 
+     122 000000e4 00119CA0             SHL     .S1X    B4,12,A0          ; |30| 
+     123 000000e8 00009C40             ADDAW   .D1     A0,A4,A0          ; |30| 
+     124 000000ec 000C0840             ADD     .D1     A3,A0,A0          ; |30| 
+     125 000000f0 02800276             STW     .D1T2   B5,*A0            ; |30| 
+     126 000000f4 033CC2E6             LDW     .D2T2   *+SP(24),B6       ; |31| 
+     127 000000f8 02BCA2E6             LDW     .D2T2   *+SP(20),B5       ; |31| 
+     128 000000fc 03BC82E6             LDW     .D2T2   *+SP(16),B7       ; |31| 
+     129 00000100 0230062A-            MVKL    .S2     _USBMonStuff+24588,B4 ; |31| 
+     130 00000104 0200006A-            MVKH    .S2     _USBMonStuff+24588,B4 ; |31| 
+     131 00000108 03198CA2             SHL     .S2     B6,12,B6          ; |31| 
+     132 0000010c 0298BC42             ADDAW   .D2     B6,B5,B5          ; |31| 
+     133                    
+     134 00000110 0210A843             ADD     .D2     B4,B5,B4          ; |31| 
+     135 00000114 00000228- ||         MVKL    .S1     _USBMonStuff+4,A0 ; |33| 
+     136                    
+     137 00000118 00000069-            MVKH    .S1     _USBMonStuff+4,A0 ; |33| 
+     138 0000011c 039002F6  ||         STW     .D2T2   B7,*B4            ; |31| 
+     139                    
+     140 00000120 01800264             LDW     .D1T1   *A0,A3            ; |33| 
+     141 00000124 0201F42A             MVK     .S2     1000,B4           ; |35| 
+     142 00000128 00004000             NOP             3
+     143                    
+     144 0000012c 01800229-            MVKL    .S1     _USBMonStuff+4,A3 ; |35| 
+     145 00000130 020C2940  ||         ADD     .D1     1,A3,A4           ; |33| 
+     146                    
+     147 00000134 02000275             STW     .D1T1   A4,*A0            ; |33| 
+     148 00000138 01800068- ||         MVKH    .S1     _USBMonStuff+4,A3 ; |35| 
+     149                    
+     150 0000013c 000C0264             LDW     .D1T1   *A3,A0            ; |35| 
+     151 00000140 00006000             NOP             4
+     152 00000144 000099FA             CMPLTU  .L2X    A0,B4,B0          ; |35| 
+     153 00000148 20000B90     [ B0]   B       .S1     L1                ; |35| 
+     154 0000014c 01800228-            MVKL    .S1     _USBMonStuff+4,A3 ; |36| 
+     155                    
+     156 00000150 000428C1             ZERO    .D1     A0                ; |36| 
+     157 00000154 01800068- ||         MVKH    .S1     _USBMonStuff+4,A3 ; |36| 
+     158                    
+     159 00000158 300C0274     [!B0]   STW     .D1T1   A0,*A3            ; |36| 
+     160 0000015c 303CC2E6     [!B0]   LDW     .D2T2   *+SP(24),B0       ; |37| 
+     161 00000160 00000000             NOP             1
+     162                               ; BRANCH OCCURS                   ; |35| 
+     163                    ;** --------------------------------------------------------------------------*
+     164 00000164 0280042A-            MVKL    .S2     _USBMonStuff+8,B5 ; |38| 
+     165 00000168 0200042A-            MVKL    .S2     _USBMonStuff+8,B4 ; |41| 
+TMS320C6x COFF Assembler         Version 4.10     Fri Jun 07 17:50:58 2024
+Copyright (c) 1996-2001 Texas Instruments Incorporated
+temp\usbmon.asm                                                      PAGE    4
+
+     166                    
+     167 0000016c 018000A9             MVK     .S1     1,A3              ; |41| 
+     168 00000170 0280006B- ||         MVKH    .S2     _USBMonStuff+8,B5 ; |38| 
+     169 00000174 030428C2  ||         ZERO    .D2     B6                ; |38| 
+     170                    
+     171 00000180 231402F7     [ B0]   STW     .D2T2   B6,*B5            ; |38| 
+     172 00000184 0200006B- ||         MVKH    .S2     _USBMonStuff+8,B4 ; |41| 
+     173 00000188 00000028- ||         MVKL    .S1     _USBMonStuff,A0   ; |43| 
+     174                    
+     175 0000018c 0207D02B             MVK     .S2     4000,B4           ; |43| 
+     176 00000190 319002F5  || [!B0]   STW     .D2T1   A3,*B4            ; |41| 
+     177 00000194 00000068- ||         MVKH    .S1     _USBMonStuff,A0   ; |43| 
+     178                    
+     179 00000198 02000276             STW     .D1T2   B4,*A0            ; |43| 
+     180                    ;** --------------------------------------------------------------------------*
+     181 0000019c           L1:    
+     182 0000019c 000C0362             B       .S2     B3                ; |45| 
+     183 000001a0 07800C52             ADDK    .S2     24,SP             ; |45| 
+     184 000001a4 00006000             NOP             4
+     185                               ; BRANCH OCCURS                   ; |45| 
+     186                    
+     187                    
+
+No Assembly Errors, No Assembly Warnings
