@@ -298,7 +298,7 @@ void main()
 			MACRO_PRINT((tmp_string, "Encoder bit: 0x%04x \r\n", *ENCPOSR & 0xFFFF)); 
 
 			MACRO_PRINT((tmp_string, "\r\n"));
-			TINTCnt = 0;
+			// TINTCnt = 0;
 		}
 		
 	}

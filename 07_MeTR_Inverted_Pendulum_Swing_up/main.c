@@ -103,49 +103,130 @@ void WaitTFlagCnt(unsigned int cnt)
 	}
 }
 
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
-/// @brief 	Generates a PWM signal based on the User Input 
-/// @param 	dutyratio Duty ratio ranging from -50.0 to 50.0
-/// @return The final adjusted dutyratio value
-
 float PWMOut(float dutyratio)
 {
-    /*
-        Goal
-        1. Generates a 0~100% PWM waveform corresponding to -50.0 <= dutyratio <= 50.0.
-        2. The PWM duty of the output waveform must be saturated to 0% or 100%.
-        
-            User Input   |  Conversion to PWM Value (hex) |    	Direction     	|  Speed
-			ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-            0 %          |              0x000             |   Reverse rotation  |  -100%
-            25 %         |              0x400             |   Reverse rotation  |  -50%
-            50 %         |              0x800             |       Stop         	|   0%
-            75 %         |              0x000             |   Forward rotation  |  50%
-            100 %        |              0x400             |   Forward rotation  |  100%
-    */
+	/*
+		1. -50.0 <= dutyratio <= 50.0, 이에 해당하는 0~100% PWM 파형 발생시킨다. 
+		2. 출력 파형의 PWM duty는 0 또는 100% duty로 saturation 되어야 함.
+	*/
 
-	float duty; 				// PWM duty variable
+	float duty; 		
 	
-	// Saturation (Safety margin 0.5)
+	//saturation
 	if (dutyratio < -49.5) {
 		dutyratio = -49.5;
 	}
-	if (dutyratio > 49.5) {	
+
+	if (dutyratio> 49.5) {	
 		dutyratio = 49.5;
 	}
 
-	// Conversion of dutyratio to PWM value
+	// dutyration <-> PWM conversion
 	duty = (dutyratio + 50) * 0xfff/100.0;
 
-	*PWMRIGHT = duty;			// Set value to the PWM register
+	*PWMLEFT = duty;
 
-	return dutyratio;  			// Return the final adjusted dutyratio
+	return dutyratio;  
+}
+
+#define ENCPULSE 1024.0
+
+float GetCartPos(){
+	short encbit;
+	signed int signed_encbit;
+	float rotationDeg;
+
+	// masking: left only the last 16bits
+	encbit = *ENCPOSR & 0xFFFF;
+
+	// converse into signed decimal number
+	if (encbit <= 0x7FFF) signed_encbit = encbit;
+	else signed_encbit = encbit - 65536;
+
+	// calc rotation degree depends on the resolution
+	rotationDeg = signed_encbit * (360.0 / (ENCPULSE)); // 바퀴 1회전당 1024 pulse
+	return rotationDeg;
+}
+
+float GetPendulumAngle(){
+	short encbit;
+	signed int signed_encbit;
+	float rotationDeg;
+
+	// masking: left only the last 16bits
+	encbit = *ENCPOSL & 0xFFFF;
+
+	// converse into signed decimal number
+	if (encbit <= 0x7FFF) signed_encbit = encbit;
+	else signed_encbit = encbit - 65536;
+
+	// calc rotation degree depends on the resolution
+	rotationDeg = signed_encbit * (360.0 / (ENCPULSE)); // 바퀴 1회전당 1024 pulse
+
+	/*
+	// rotation degree를 0.0~360.0 범위로 제한
+
+	*/
+	rotationDeg = fmod(rotationDeg, 360.0f);
+    if (rotationDeg < 0.0f) {
+        rotationDeg += 360.0f;
+    }
+
+	return rotationDeg;
 }
 
 
 
+int swingUpDirection = 1; // true면 -30, false면 30
+int WaitCnt = 400;
+float u = 30.0;
+
+void SwingUpControl(){
+	float pend_angle;
+	pend_angle = GetPendulumAngle();
+
+	if (TINTCnt < WaitCnt){
+		if (swingUpDirection) {
+			if (pend_angle > 140 && pend_angle < 180 || pend_angle < 220 && pend_angle > 180){
+				u = 35;
+				PWMOut(u);
+			} else{
+				u = 30;
+				PWMOut(-u);
+			}
+		}
+		else{
+			if (pend_angle > 140 && pend_angle < 180 || pend_angle < 220 && pend_angle > 180){
+				u = 35;
+				PWMOut(-u);
+			} else{
+				u = 30;
+				PWMOut(u);
+			}
+		}
+	} 
+	else{
+		TINTCnt = 0;
+		swingUpDirection = !swingUpDirection;
+
+		if(pend_angle < 195 && pend_angle >175){
+			WaitCnt = 400;
+		}
+		WaitCnt += 20;
+	}
+
+}
+
+// timer var
+unsigned int TINTCnt;
+int timerCheckCnt = 0;
+
+// reference pos of pendulum and cart
+float R_pend = 180.0;
+float R_cart = 0.0;
+
+// mode control variable
+enum MODE mode;
 
 
 void main()
@@ -162,20 +243,41 @@ void main()
 
 	TFlag = 0;
 
-	GIE();					// Global Interrupt Enable !!
-
+	GIE();
 	*FPGALED = 1;			// FPGA LED 1 : ON, 0 : OFF
 	*PWMDRVEN = 1;			// PWMENABLE 1 : ON, 0 : 0FF
-	//*PWMRIGHT = 0x800;		// PWM : 0x000 ~ 0x800 ~ 0xFFF
+	*ENCPOSCLR = 1;			// 위치 초기화
 
-	WaitTFlagCnt(100);
+	WaitTFlagCnt(1000);
 
+
+	TINTCnt = 0;	// timer varable init
 	
 	
 	while (1) {
-		
-		PWMOut(25);
+		*FPGALED ^= 1;
 
-	} // block to terminate
+		// if the pendulum is located within balancing range, change the mode
+		if(y_pend >= 160 && y_pend <= 200){
+			mode = BALANCING;
+		}
+		else{
+			// PWMOut(0);
+			mode = SWINGUP; // start with swing-up
+		}
+
+		// timer check
+		if(TINTCnt > 1000){
+
+			timerCheckCnt++;
+			MACRO_PRINT((tmp_string, "==== Timer Check: %d ====\r\n", timerCheckCnt));
+
+			MACRO_PRINT((tmp_string, "pendulum pos: %6.2f \r\n", GetPendulumAngle() ));
+
+			MACRO_PRINT((tmp_string, "cart encoder: %6.2f \r\n", GetCartPos())); 
+			MACRO_PRINT((tmp_string, "\r\n"));
+			TINTCnt = 0;
+		}
+	}
 }
 
