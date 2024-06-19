@@ -8,12 +8,12 @@ This repository contains the coursework and projects completed for the Mechatron
 - **Description:** Implementation of control algorithms to operate a DC motor.
 - **Key Concepts:** PWM control, PID control, speed and position regulation.
 - **Files:** `01_MeTR_PWM/`
-  <a href="https://youtu.be/hDL8RUhCPB4"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white"/></a>
+<a href="https://youtu.be/hDL8RUhCPB4"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white"/></a>
 - **Files:** `02_MeTR_Encoder/`
 - **Files:** `03_MeTR_Timer/`
-  <a href="https://youtube.com/shorts/ksDDeBqZKb4?feature=share"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white"/></a>
+<a href="https://youtube.com/shorts/ksDDeBqZKb4?feature=share"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white"/></a>
 - **Files:** `04_MeTR_Trapezodial_Trajectory_Tracking/`
-  <a href="https://youtube.com/shorts/N7a_fgtnn20?feature=share"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white"/></a>
+<a href="https://youtube.com/shorts/N7a_fgtnn20?feature=share"><img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white"/></a>
 
 ### 2. Stepper Motor Control
 - **Description:** Programming and controlling a stepper motor for precise movement.
